@@ -23,16 +23,22 @@ const Continents = () => {
   if (error) return <pre>{error.message}</pre>
   return (
     <>
-      <h1>List of Continents</h1>
+      <h1>Select a Continent to get all Countries</h1>
       <select name="continent" onChange={onCountSelect}>
+        <option value="" selected>
+          Select...
+        </option>
         {data.continents.map(continent => {
           return (
-            <option key={continent.code} value={continent.code}>
-              {continent.name}
-            </option>
+            <>
+              <option key={continent.code} value={continent.code}>
+                {continent.name}
+              </option>
+            </>
           )
         })}
       </select>
+      {contSelected && <Country code={contSelected} />}
     </>
   )
 }
