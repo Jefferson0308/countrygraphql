@@ -1,6 +1,13 @@
 import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
 import Country from './Country'
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  TextField,
+  Typography
+} from '@mui/material'
 
 const GET_CONTINENTS = gql`
   query Continents {
@@ -23,21 +30,32 @@ const Continents = () => {
   if (error) return <pre>{error.message}</pre>
   return (
     <>
-      <h1>Select a Continent to get all Countries</h1>
-      <select name="continent" onChange={onCountSelect}>
-        <option value="" selected>
-          Select...
-        </option>
-        {data.continents.map(continent => {
-          return (
-            <>
-              <option key={continent.code} value={continent.code}>
-                {continent.name}
-              </option>
-            </>
-          )
-        })}
-      </select>
+      <Grid item xs={12} md={12} sx={{ textAlign: 'center' }}>
+        <FormControl size="medium">
+          <TextField
+            id="standard-select-currency-native"
+            select
+            label="Components"
+            onChange={onCountSelect}
+            size="small"
+            SelectProps={{
+              native: true
+            }}
+            helperText="Select a Component..."
+          >
+            <option value="" selected></option>
+            {data.continents.map(continent => {
+              return (
+                <>
+                  <option key={continent.code} value={continent.code}>
+                    {continent.name}
+                  </option>
+                </>
+              )
+            })}
+          </TextField>
+        </FormControl>
+      </Grid>
       {contSelected && <Country code={contSelected} />}
     </>
   )
